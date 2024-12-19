@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ category_name|capfirst }}</title>
+    <style>
+        .container {
+            display: flex;
+        }
+        .sidebar {
+            width: 20%;
+            padding: 20px;
+        }
+        .content {
+            width: 80%;
+            padding: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .product {
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ category_name|capfirst }}</h1>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h3>Sort By</h3>
+            <ul>
+                <li><a href="?sort_by=popularity" {% if sort_by == 'popularity' %}style="font-weight: bold;"{% endif %}>Popularity</a></li>
+                <li><a href="?sort_by=new" {% if sort_by == 'new' %}style="font-weight: bold;"{% endif %}>New</a></li>
+                <li><a href="?sort_by=discount" {% if sort_by == 'discount' %}style="font-weight: bold;"{% endif %}>Discount</a></li>
+                <li><a href="?sort_by=rating" {% if sort_by == 'rating' %}style="font-weight: bold;"{% endif %}>Rating</a></li>
+            </ul>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="grid">
+                {% for product in products %}
+                <div class="product">
+                    <img src="{{ product['image_url'] }}" alt="{{ product.product_name }}">
+                    <p>{{ product.product_name }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
