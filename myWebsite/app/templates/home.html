@@ -1,19 +1,150 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
+    
+    <!-- Link to Google Fonts for Poppins font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Apply Poppins font to the whole page */
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;  /* Center align content horizontally */
+            align-items: center;      /* Center align content vertically */
+            height: 100vh;            /* Full viewport height */
+            margin: 20px;             /* Add margin around the whole page */
+            background-color: #f9f9f9;
+        }
+
+        /* Center the page title */
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* Category container grid */
+        .category-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Fixed 4 columns layout */
+            gap: 20px;
+            margin-top: 20px;
+            margin-bottom: 20px;  /* Add bottom margin */
+            padding: 10px;        /* Add padding inside the container */
+            width: 100%;          /* Make sure it takes the full width */
+        }
+
+        /* Category box styling */
+        .category {
+            text-align: center;
+            border-radius: 12px; /* Rounded edges */
+            overflow: hidden;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 10px;  /* Add margin around each category box */
+        }
+
+        .category:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        }
+
+        /* Category image styling */
+        .category img {
+            width: 60%; /* Adjust size */
+            height: auto;
+            border-radius: 12px; /* Same rounded edges as the box */
+            transition: transform 0.2s ease;
+            margin: 10px auto; /* Center the image */
+        }
+
+        .category img:hover {
+            transform: scale(1.05); /* Slight zoom effect on hover */
+        }
+
+        /* Category text styling */
+        .category p {
+            margin-top: 10px;
+            font-size: 1.1em;
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        /* Remove link underline and highlight */
+        a {
+            text-decoration: none; /* Removes the underline */
+            outline: none; /* Removes any outline from clicking the link */
+        }
+
+        a:hover {
+            color: inherit; /* Prevent color change on hover */
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Welcome to the Store</h1>
-    <ul>
-        <li><a href="/kurtas-and-suits/">Kurtas & Suits</a></li>
-        <li><a href="/kurtis-tunics-tops/">Kurtis, Tunics & Tops</a></li>
-        <li><a href="/sarees/">Sarees</a></li>
-        <li><a href="/ethnic-wear/">Ethnic Wear</a></li>
-        <li><a href="/dresses/">Dresses</a></li>
-        <li><a href="/tops/">Tops</a></li>
-        <li><a href="/tshirts/">Tshirts</a></li>
-        <li><a href="/jeans/">Jeans</a></li>
-    </ul>
+    {% load static %}
+    <div>
+        <!-- Home Page Title -->
+        <h1>Home Page</h1>
+        
+        <!-- Category Grid -->
+        <div class="category-container">
+            <div class="category">
+                <a href="{% url 'category_page' 'kurtas-and-suits' %}">
+                    <img src="{% static 'images/kurtas_and_suits.jpg' %}" alt="Kurtas & Suits">
+                    <p>Kurtas & Suits</p>
+                </a>
+            </div>
+            <div class="category">
+                <a href="{% url 'category_page' 'kurtis-tunics-tops' %}">
+                    <img src="{% static 'images/kurtis_tunics_tops.jpg' %}" alt="Kurtis, Tunics and Tops">
+                    <p>Kurtis, Tunics and Tops</p>
+                </a>
+            </div>
+            <div class="category">
+                <a href="{% url 'category_page' 'sarees' %}">
+                    <img src="{% static 'images/sarees.jpg' %}" alt="Sarees">
+                    <p>Sarees</p>
+                </a>
+            </div>
+            <div class="category">
+                <a href="{% url 'category_page' 'ethnic-wear' %}">
+                    <img src="{% static 'images/ethnic_wear.jpg' %}" alt="Ethnic Wear">
+                    <p>Ethnic Wear</p>
+                </a>
+            </div>
+            <div class="category">
+                <a href="{% url 'category_page' 'dresses' %}">
+                    <img src="{% static 'images/dresses.jpg' %}" alt="Dresses">
+                    <p>Dresses</p>
+                </a>
+            </div>
+            <div class="category">
+                <a href="{% url 'category_page' 'tops' %}">
+                    <img src="{% static 'images/tops.jpg' %}" alt="Tops">
+                    <p>Tops</p>
+                </a>
+            </div>
+            <div class="category">
+                <a href="{% url 'category_page' 'tshirts' %}">
+                    <img src="{% static 'images/tshirts.jpg' %}" alt="Tshirts">
+                    <p>Tshirts</p>
+                </a>
+            </div>
+            <div class="category">
+                <a href="{% url 'category_page' 'jeans' %}">
+                    <img src="{% static 'images/jeans.jpg' %}" alt="Jeans">
+                    <p>Jeans</p>
+                </a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

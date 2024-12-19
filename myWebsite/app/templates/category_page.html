@@ -1,60 +1,238 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>{{ category_name|capfirst }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ display_name|capfirst }}</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&family=Poppins:wght@400;600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* Apply Google Font to the entire page */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Back to Home Button */
+        .back-button {
+            font-family: 'Rubik', sans-serif;
+            background-color: #966984;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #AB879C;
+            transform: translateY(-2px);
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 20px;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5em;
+            font-weight: 600;
+            margin: 0;
+            text-align: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Container to arrange Sidebar and Content */
         .container {
             display: flex;
+            margin-top: 20px;
+            height: 100vh; /* Full height */
         }
+
+        /* Sidebar */
         .sidebar {
             width: 20%;
             padding: 20px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: 100%; /* Full height */
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Shadow for separation */
         }
+
+        .sidebar h3 {
+            font-size: 1.5em;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px; /* Reduced margin */
+        }
+
+        /* Sorting options */
+        .radio-group label {
+            font-size: 1.1em;
+            font-family: 'Rubik', sans-serif;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: block;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        /* Style for radio inputs */
+        .radio-group input {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px; /* Square shape */
+            appearance: none;
+            background-color: #ffffff;
+            border: 2px solid #966984;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .radio-group input:checked {
+            background-color: #AB879C;
+            border-color: #966984;
+        }
+
+        /* Hover effect for labels */
+        .radio-group label:hover {
+            color: #966984;
+        }
+
+        /* Active sorting option styling */
+        .radio-group input:checked + label {
+            font-weight: bold;
+            color: #966984;
+        }
+
+        /* Content for product grid */
         .content {
             width: 80%;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%; /* Full height */
+            overflow-y: auto;
         }
+
+        /* Product grid */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
         }
+
+        /* Product box */
         .product {
             text-align: center;
-            border: 1px solid #ddd;
-            padding: 10px;
+            border-radius: 12px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
         }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0);
+        }
+
         .product img {
             width: 100%;
             height: auto;
+            border-radius: 12px 12px 0 0;
+            transition: transform 0.2s ease;
+        }
+
+        .product img:hover {
+            transform: scale(1.05);
+        }
+
+        .product p {
+            margin-top: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            padding: 10px;
+            font-family: 'Poppins', sans-serif;
         }
     </style>
 </head>
 <body>
-    <h1>{{ category_name|capfirst }}</h1>
+
+    <!-- Header containing Back to Home Button and Page Title -->
+    <div class="header">
+        <!-- Back to Home Button -->
+        <a href="{% url 'home' %}" class="back-button">Back to Home</a>
+        
+        <!-- Page Title -->
+        <h1>{{ display_name|capfirst }}</h1>
+    </div>
+
     <div class="container">
-        <!-- Sidebar -->
+        <!-- Sidebar for Sort By options -->
         <div class="sidebar">
             <h3>Sort By</h3>
-            <ul>
-                <li><a href="?sort_by=popularity" {% if sort_by == 'popularity' %}style="font-weight: bold;"{% endif %}>Popularity</a></li>
-                <li><a href="?sort_by=new" {% if sort_by == 'new' %}style="font-weight: bold;"{% endif %}>New</a></li>
-                <li><a href="?sort_by=discount" {% if sort_by == 'discount' %}style="font-weight: bold;"{% endif %}>Discount</a></li>
-                <li><a href="?sort_by=rating" {% if sort_by == 'rating' %}style="font-weight: bold;"{% endif %}>Rating</a></li>
-            </ul>
+            <div class="radio-group">
+                <form method="get" action="">
+                    <label>
+                        <input type="radio" name="sort_by" value="popularity" {% if sort_by == 'popularity' %}checked{% endif %}> Popularity
+                    </label>
+                    <label>
+                        <input type="radio" name="sort_by" value="new" {% if sort_by == 'new' %}checked{% endif %}> New
+                    </label>
+                    <label>
+                        <input type="radio" name="sort_by" value="discount" {% if sort_by == 'discount' %}checked{% endif %}> Discount
+                    </label>
+                    <label>
+                        <input type="radio" name="sort_by" value="rating" {% if sort_by == 'rating' %}checked{% endif %}> Rating
+                    </label>
+                </form>
+            </div>
         </div>
 
-        <!-- Content -->
+        <!-- Content for products -->
         <div class="content">
             <div class="grid">
                 {% for product in products %}
                 <div class="product">
-                    <img src="{{ product['image_url'] }}" alt="{{ product.product_name }}">
+                    <a href="{% url 'product_page' category_name product.id %}?sort_by={{ sort_by }}">
+                        <img src="{{ product.image_url }}" alt="{{ product.product_name }}"/>
+                    </a>
                     <p>{{ product.product_name }}</p>
                 </div>
+                {% empty %}
+                    <p>No products available in this category.</p>
                 {% endfor %}
             </div>
         </div>
     </div>
+
+    <script>
+        // Automatically submit the form when a radio button is selected
+        const radioButtons = document.querySelectorAll('.radio-group input');
+        radioButtons.forEach(button => {
+            button.addEventListener('change', function() {
+                this.form.submit(); // Submit the form on selection
+            });
+        });
+    </script>
 </body>
 </html>

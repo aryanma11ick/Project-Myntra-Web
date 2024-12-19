@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.product_name }} Details</title>
+    
+    <!-- Link to Google Fonts for Rubik and Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&family=Roboto:wght@400;500;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Apply Google Font (Roboto) to the entire page */
+        body {
+            font-family: 'Roboto', sans-serif; /* Set Roboto as default font */
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9; /* Light gray background */
+        }
+
+        /* Main Container for Content */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto; /* Center the container with some margin */
+            padding: 30px;
+            background-color: #fff; /* White background for content */
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Product Details container */
+        .product-details {
+            display: flex;
+            align-items: flex-start; /* Align items at the start of the container */
+            justify-content: flex-start; /* Align items to the start */
+            gap: 40px; /* Space between image and product details */
+            margin-bottom: 30px;
+        }
+
+        /* Product Image */
+        .product-details img {
+            max-width: 400px; /* Control image size */
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Product Name and Details */
+        .product-info {
+            max-width: 600px; /* Limit width of product info */
+            text-align: left; /* Align text to the left */
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif; /* Apply Poppins font to title */
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #333; /* Darker color for the product name */
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin: 10px 0;
+            color: #555; /* Lighter color for the text */
+        }
+
+        /* Button Styling for Both Back and Buy Now */
+        .button {
+            font-family: 'Rubik', sans-serif; /* Apply Roboto font to buttons */
+            font-size: 2.0rem;
+            padding: 10px 20px; /* Adjusted padding to match button size */
+            background-color: #966984;
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        /* Hover Effect for Buttons */
+        .button:hover {
+            background-color: #AB879C;
+        }
+
+        /* Back to Category Button - Position it outside the container */
+        .back-btn-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10; /* Make sure it's above the content */
+        }
+
+        .back-btn {
+            font-family: 'Rubik', sans-serif;
+            display: inline-block;
+            padding: 10px 20px; /* Same size as Back to Home button */
+            background-color: #966984; /* Same background as Back to Home */
+            color: white; /* White text */
+            text-decoration: none;
+            border-radius: 5px; /* Same border radius as home page button */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px); /* Lift effect on hover */
+            background-color: #AB879C; /* Same hover color as category page */
+        }
+
+        .back-btn p {
+            margin: 0;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        {% if product %}
+        <div class="product-details">
+            <!-- Product Image -->
+            <img src="{{ product.image_url }}" alt="{{ product.product_name }}">
+
+            <!-- Product Name and Details -->
+            <div class="product-info">
+                <h1>{{ product.product_name }}</h1>
+                <p><strong>Brand:</strong> {{ product.product_brand }}</p>
+                <p><strong>Product ID:</strong> {{ product.id }}</p>
+                <p><strong>Price:</strong> {{ product.original_price }}</p>
+                <p><strong>Discounted Price:</strong> {{ product.discounted_price }}</p>
+                <p><strong>Rating:</strong> {{ product.product_rating }} / 5</p>
+                <p><strong>Rating Count:</strong> {{ product.product_rating_count }}</p>
+                <!-- Buy Now Button -->
+                <p><a href="{{ product.product_url }}" target="_blank" class="button">Buy Now</a></p>
+            </div>
+        </div>
+        {% else %}
+        <h1>Product Not Found</h1>
+        {% endif %}
+    </div>
+
+    <!-- Back to Category Button -->
+    <div class="back-btn-container">
+        <a href="{% url 'category_page' category_name %}" class="back-btn">
+            <p>Back to Category</p>
+        </a>
+    </div>
+
+</body>
+</html>
